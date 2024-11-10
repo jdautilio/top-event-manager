@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-puts 'EventManager Initialized!'
+require 'csv'
 
-lines = File.readlines('event_atendees.csv')
-lines.each_with_index do |line, index|
-  next if index.zero?
-
-  columns = line.split(',')
-  name = columns[2]
-  puts name
+contents = CSV.open(
+  'event_atendees.csv',
+  headers: true,
+  header_converters: :symbol
+)
+contents.each do |row|
+  name = row[:first_name]
+  zipcode = row[:zipcode]
+  puts "#{name} #{zipcode}"
 end
